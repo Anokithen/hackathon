@@ -1,8 +1,6 @@
 from flask import Blueprint
 from app.middleware import roles_required
-
 from app.controllers import user_controller as ctrl
-
 
 user_bp = Blueprint("users", __name__, url_prefix="/api/users")
 
@@ -20,12 +18,12 @@ def get_users():
     return ctrl.get_users()
 
 @user_bp.route("/<int:user_id>", methods=["GET"])
-@roles_required("admin")
+@roles_required("admin", "customer", "seller")
 def get_user(user_id):
     return ctrl.get_user(user_id)
 
 @user_bp.route("/<int:user_id>", methods=["PUT"])
-@roles_required("admin")
+@roles_required("admin", "customer", "seller")
 def update_user(user_id):
     return ctrl.update_user(user_id)
 
